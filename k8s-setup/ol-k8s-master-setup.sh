@@ -25,13 +25,13 @@ k8_cluster_setup () {
 	read -s pass
 
 	printf "\n\nLogin to container-registry.oracle.com...\n\n"
-	docker login --username ${user:?} --password ${pass:?} container-registry.oracle.com
+	sudo docker login --username ${user:?} --password ${pass:?} container-registry.oracle.com
 
-	printf "\n\nSetup the K8s cluster...\n"
-	kubeadm-setup up
+	printf "#\nSetup the K8s cluster...\n"
+	sudo /bin/kubeadm-setup.sh up
 
 	printf "\n\nClean up the login...\n"
-	docker logout container-registry.oracle.com
+	sudo docker logout container-registry.oracle.com
 }
 
 kubectl_user () {
@@ -46,6 +46,7 @@ kubectl_user () {
 }
 
 # main
+k8s_install
 k8_cluster_setup
 kubectl_user
 

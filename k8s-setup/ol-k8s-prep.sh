@@ -23,9 +23,9 @@ docker_install () {
 	sudo yum-config-manager --enable ol7_addons
 	sudo yum install -y docker-engine
 
-	systemctl enable docker
-	systemctl start docker
-	systemctl status docker
+	sudo systemctl enable docker
+	sudo systemctl start docker
+	sudo systemctl status docker
 }
 
 ntp_install () {
@@ -33,20 +33,20 @@ ntp_install () {
 
 	sudo yum install -y ntp
 
-	sudo systemctl enable ntp
-	sudo systemctl start ntp
+	sudo systemctl enable ntpd
+	sudo systemctl start ntpd
 }
 
 sec_stuff () {
 	printf "\nCheck if firewalld is running...\n\n"
-	systemctl status firewalld
+	sudo systemctl status firewalld
 
 	printf "\nUpdate firewall rules...\n\n"
-	iptables -P FORWARD ACCEPT
-	iptables -L |grep FORWARD
+	sudo iptables -P FORWARD ACCEPT
+	sudo iptables -L |grep FORWARD
 
 	printf "\nSELinux setting...\n"
-	getenforce
+	sudo getenforce
 }
 
 #main
